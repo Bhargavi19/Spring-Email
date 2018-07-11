@@ -16,35 +16,36 @@
 
 <jsp:include page="header.jsp" />
 
-	<h1>VIEW</h1>
+	
+	<table  >
 	<c:forEach var="mail" items="${mails}">
 		
-			<div style="margin-top:15px; border:1px solid white;">
-				<div style=" display:inline-block">
-					<span style="color:blue;font-size: 20px;">To</span><span> ${mail.toa} </span>
-					<span style="color:blue;font-size:20px;margin-left:20px;">Subject </span> <span> ${mail.sbjt} </span>
-				</div>
-					<div style="margin-left:15px; display:inline-block">
-					<form action="${contextPath}/view" method="get" >
+			<div style="margin-top: 15px;">
+				<tr>
+					<td><span style="color:blue;font-size: 20px;">To</span><span> ${mail.toa} </span></td>
+					<td><span style="color:blue;font-size:20px;margin-left:20px;">Subject </span> <span> ${mail.sbjt} </span></td>
+			
+			
+					<td><form action="${contextPath}/view" method="get" >
 						<input name="name" value="${pageContext.request.userPrincipal.name}" type="hidden" />
 						<input name="id" value="${mail.id}" type="hidden" />
-						<input type="submit" value="view" style="display:inline-block;"/>
-					</form>
-					</div>
+						<input type="submit" value="view"/>
+					</form></td>
+			
 					 
 					   
-					<div style="margin-left:15px;display:inline-block">
-					<form action="${contextPath}/delete" method="get"  >
+			
+					<td><form action="${contextPath}/delete" method="get"  >
 							<input name="name" value="${pageContext.request.userPrincipal.name}" type="hidden" />
 							<input name="id" value="${mail.id}" type="hidden" />
 							<input name="page" value="sent" type="hidden" />
 							<input name="move" value="move" type="hidden" />
-							<input type="submit" value="delete" />
+							<input type="submit" value="delete" /></td>
 					</form>
-					</div>
+				</tr>
 			</div>
 	</c:forEach>	
-
+	</table>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>

@@ -22,11 +22,11 @@
     <form:label path="subject">subject</form:label><br>
     <form:input id="subject" path="subject" /><br>
     <form:label path="body">body</form:label><br>
-    <form:textarea id="body" path="body"></form:textarea>
+    <form:textarea rows="15" cols="120" id="body" path="body"></form:textarea>
     
 </form:form>
-<button onclick="sendmail()"> submit </button>
-<span id="message" >  </span>
+<button onclick="sendmail()"> send mail </button><br>
+<span style="margin-top:20px;color:blue;" id="message" >  </span>
 
 <script>
 function sendmail()

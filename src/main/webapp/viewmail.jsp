@@ -19,9 +19,12 @@
 	<jsp:include page="header.jsp" />
 	<div>
 	<c:set var="mail" value="${mail}"/>
-	<span>From</span><span style="margin-left:30px">${mail.frma}</span><br>
-	<span>Subject</span><span style="margin-left:30px">${mail.sbjt}</span><br>
-	<span>body</span><span style="margin-left:30px">${mail.body}</span><br>
+	<h3 style="margin-left:20px">From</span>
+	<span style="margin-left:20px">${mail.frma}</span><br>
+	<h3 style="margin-left:20px">Subject</span>
+	<span style="margin-left:20px">${mail.sbjt}</span><br>
+	<h3 style="margin-left:20px;">body</h3>
+	<span style="margin-left:20px;font-size:20px">${mail.body}</span><br>
 	</div>
 </body>
 </html>
