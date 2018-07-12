@@ -11,7 +11,6 @@ import com.vishnu.project.repository.MailRepository;
 import com.vishnu.project.service.MailService;
 
 @Service
-
 public class MailServiceImpl implements MailService 
 {
 	
