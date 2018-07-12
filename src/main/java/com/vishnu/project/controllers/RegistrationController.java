@@ -18,7 +18,7 @@ import com.vishnu.project.service.UserService;
 import com.vishnu.project.validator.UserValidator;
 
 @Controller
-public class UserController 
+public class RegistrationController 
 {
     @Autowired
     private UserService userService;
@@ -55,53 +55,8 @@ public class UserController
         
         return "registration";
     }
-    @RequestMapping(value="/forgotpassword", method=RequestMethod.GET)
-    public ModelAndView showForgotPassword()
-    {
-    	return new ModelAndView("forgotpassword");
-    }
-    @RequestMapping(value="/forgotpassword", method=RequestMethod.POST)
-    public ModelAndView sendMailLink(@RequestParam String name)
-    {
-    	User u = userService.findByUsername(name);
-    	ModelAndView view = new ModelAndView("forgotpassword");
-    	if(u == null)
-    	{
-    		view.addObject("message","username couldnt be found");
-    		return view;
-    	}
-    	else
-    	{
-    		view.addObject("message","Password reset link has been sent");
-    		return view;
-    	}
-    	
-    }
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout,Principal p) 
-    {
-    	if(p != null)
-    	{
-    		
-    		return "redirect:/welcome";
-    	}
-        if (error != null)
-            model.addAttribute("error", "Invalid username password combination.");
-
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
-
-        return "login";
-    }
     
-   /* @RequestMapping(value="/login", method=RequestMethod.GET)
-    public String login(Principal principal) {
-        if (principal != null) {
-            return "redirect:/welcome";
-        }
-        return "/login";
-}*/
-
+    
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public ModelAndView welcome(Model model, Principal principal) 
     {

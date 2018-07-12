@@ -1,4 +1,4 @@
-package project;
+package com.vishnu.project.testing;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -25,7 +25,8 @@ import org.springframework.web.context.WebApplicationContext;
  * @author: VishnuJammula
  */
 
-public class TestLogin extends MailerApplicationTest{
+public class TestLogin extends ContextLoadingTests
+{
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 	
