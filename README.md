@@ -1,6 +1,4 @@
-# project
-
-# project 
+ 
 # Mailer Application
 
 Overview
