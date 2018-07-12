@@ -9,11 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.vishnu.project.model.User;
-import com.vishnu.project.service.SecurityService;
 import com.vishnu.project.service.UserService;
 import com.vishnu.project.validator.UserValidator;
 
@@ -23,18 +21,18 @@ public class RegistrationController
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private SecurityService securityService;
 
     @Autowired
     private UserValidator userValidator;
+    
+    static final String REGISTRATION = "registration";
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) 
     {
         model.addAttribute("userForm", new User());
 
-        return "registration";
+        return REGISTRATION;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
@@ -43,17 +41,17 @@ public class RegistrationController
 
         if (bindingResult.hasErrors()) 
         {
-        	//model.addAttribute("userForm",new User());
-            return "registration";
+        	
+        	return REGISTRATION;
         }
 
         userService.save(userForm);
 
-        //securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
+       
         model.addAttribute("successMessage", "You have been registered successfully");
         model.addAttribute("userForm",new User());
         
-        return "registration";
+        return REGISTRATION;
     }
     
     

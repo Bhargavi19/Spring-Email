@@ -3,7 +3,6 @@ package com.vishnu.project.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.vishnu.project.model.Mail;
@@ -22,16 +21,16 @@ public class MailServiceImpl implements MailService
 	public List<Mail> getAllMailsByToaAndMt(String toa,String type) 
 	{
 		
-			List<Mail> mails = mailRepository.findByToaAndMt(toa,type); 
-			return mails;
+			 
+			return  mailRepository.findByToaAndMt(toa,type); 
 		
 	}
 	
 	@Override
 	public List<Mail> getAllMailsByFromaddAndType(String from, String type) 
 	{
-		List<Mail> mails =mailRepository.findByFrmaAndMt(from,type);
-		return mails;
+		
+		return mailRepository.findByFrmaAndMt(from,type);
 	}
 	@Override
 	public Mail getById(Long id) 

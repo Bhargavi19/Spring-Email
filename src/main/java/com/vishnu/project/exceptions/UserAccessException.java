@@ -3,6 +3,10 @@ package com.vishnu.project.exceptions;
 public class UserAccessException extends RuntimeException
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String errMsg;
 
 	public String getErrMsg() {

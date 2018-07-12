@@ -39,8 +39,7 @@ public class ContextLoadingTests
 	@Autowired
 	private ForgotPasswordController mockFPC;
 	
-	@Autowired 
-	private MailController mockMail;
+	
 	
 	@Test
 	public void contextLoads() 

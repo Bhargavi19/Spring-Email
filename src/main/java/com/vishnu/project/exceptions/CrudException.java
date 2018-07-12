@@ -3,6 +3,7 @@ package com.vishnu.project.exceptions;
 public class CrudException extends RuntimeException
 {
 	
+	private static final long serialVersionUID = 1L;
 		private String type;
 		public String getType() {
 			return type;

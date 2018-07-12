@@ -3,10 +3,6 @@ package com.vishnu.project.testing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -110,12 +106,12 @@ public class TestLogin extends ContextLoadingTests
 	 * 
 	 */
 	
-	@Test
+	/*@Test
 	public void registrationTest() throws Exception
 	{
 		RequestBuilder requestBuilder = post("http://localhost:8080/registration");
 		mockMvc.perform(requestBuilder)
 		.andDo(print()).andExpect(model().hasErrors());	
-	 }
+	 }*/
 	
 }

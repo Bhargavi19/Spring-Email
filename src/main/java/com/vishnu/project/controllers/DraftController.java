@@ -18,7 +18,6 @@ import com.vishnu.project.exceptions.UserAccessException;
 import com.vishnu.project.model.Compose;
 import com.vishnu.project.model.Mail;
 import com.vishnu.project.service.MailService;
-import com.vishnu.project.service.UserService;
 
 @Controller
 public class DraftController 
@@ -26,27 +25,28 @@ public class DraftController
 	@Autowired
     private MailService mailService;
 	
-	@Autowired
-	private UserService service;
+	private static final String DRAFT = "draft";
+	
 	@RequestMapping(value="/draft/{name}", method=RequestMethod.GET)
 	public ModelAndView showDrafts(@PathVariable String name, Principal p)
 	{
-		name+=".com";
-		if(p.getName().equalsIgnoreCase(name))
+		final String username = name+".com";
+		
+		if(p.getName().equalsIgnoreCase(username))
 		{
 			List<Mail> mails;
 			try
 			{
-				mails = mailService.getAllMailsByFromaddAndType(name,"draft");
+				mails = mailService.getAllMailsByFromaddAndType(username,DRAFT);
 			}
 			catch(CrudException e)
 			{
 				throw new CrudException("Sorry "+p.getName()+"!.There is some problem reading your draft");
 			}
 			 
-			//System.out.println(mails.size());
 			
-			ModelAndView model = new ModelAndView("draft");
+			
+			ModelAndView model = new ModelAndView(DRAFT);
 			model.addObject("mails", mails);
 			
 			return model;
@@ -88,7 +88,7 @@ public class DraftController
 		if(p != null)
 		{
 			long id = compose.getId();
-			System.out.println("draft id"+id);
+			
 			String to = compose.getTo();
 			String body = compose.getBody();
 			String subject = compose.getSubject();
@@ -96,12 +96,12 @@ public class DraftController
 			Mail m = null;
 			if(id == 0)
 			{
-				System.out.println("creating new draft");
+				
 				m = new Mail();
 			}
 			else
 			{
-				System.out.println("editing old draft");
+				
 				try
 				{
 					m = mailService.getById(id);
@@ -112,7 +112,7 @@ public class DraftController
 				}
 			}
 			m.setFrma(p.getName());
-			m.setMt("draft");
+			m.setMt(DRAFT);
 			m.setToa(to);
 			m.setBody(body);
 			m.setSbjt(subject);

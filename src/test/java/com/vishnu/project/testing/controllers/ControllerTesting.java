@@ -1,4 +1,4 @@
-package com.vishnu.project.testing.controllers;
+/*package com.vishnu.project.testing.controllers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,3 +49,4 @@ public class ControllerTesting extends ContextLoadingTests
 	    }
 
 }
+*/

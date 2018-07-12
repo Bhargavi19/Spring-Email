@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,9 +41,9 @@ public class ComposeController
 	public  String composeMail(@PathVariable String name, @RequestBody Compose compose, Principal p)
 	{
 		
-		name+=".com";
+		final String username = name+".com";
 		
-		if(p.getName().equalsIgnoreCase(name))
+		if(p.getName().equalsIgnoreCase(username))
 		{
 			String to = compose.getTo();
 			long ln = compose.getId();
@@ -59,13 +58,13 @@ public class ComposeController
 				Mail m = null;
 				if(ln == 0)
 				{
-					System.out.println("creating new mail");
+					
 					m = new Mail();
 					
 				}
 				else
 				{
-					System.out.println("edited draft");
+					
 					try {
 					m = mailService.getById((long) ln);
 					}
@@ -73,7 +72,7 @@ public class ComposeController
 						throw new CrudException("Sorry "+p.getName()+"!.There is some problem sending your mail");
 					}
 				}
-				m.setFrma(name);
+				m.setFrma(username);
 				m.setMt("sent");
 				m.setToa(compose.getTo());
 				m.setBody(compose.getBody());
