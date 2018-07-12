@@ -3,6 +3,7 @@ package com.vishnu.project.controllers;
 import java.security.Principal;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,11 +28,13 @@ public class DraftController
 	
 	private static final String DRAFT = "draft";
 	
+	static final Logger logger =Logger.getLogger(DraftController.class);
+	
 	@RequestMapping(value="/draft/{name}", method=RequestMethod.GET)
 	public ModelAndView showDrafts(@PathVariable String name, Principal p)
 	{
 		final String username = name+".com";
-		
+		logger.info("show drafts is called by "+username);
 		if(p.getName().equalsIgnoreCase(username))
 		{
 			List<Mail> mails;
@@ -41,6 +44,7 @@ public class DraftController
 			}
 			catch(CrudException e)
 			{
+				logger.error("problem reading drafts for user "+username);
 				throw new CrudException("Sorry "+p.getName()+"!.There is some problem reading your draft");
 			}
 			 
@@ -48,11 +52,12 @@ public class DraftController
 			
 			ModelAndView model = new ModelAndView(DRAFT);
 			model.addObject("mails", mails);
-			
+			logger.info("sending drafts of user "+username);
 			return model;
 		}
 		else
 		{
+			logger.error("illegal access [drafts] by "+username);
 			throw new UserAccessException("Hello "+p.getName()+" You cannot access "+name+" drafts");
 		}
 	}
@@ -60,7 +65,7 @@ public class DraftController
 	@RequestMapping(value="draft/delete/{name}/{id}", method=RequestMethod.GET)
 	public ModelAndView deleteDarft(@PathVariable String name, @PathVariable Long id,Principal p)
 	{
-		
+		logger.info("delete drafts invoked by user "+name+". Draft id is "+id);
 		if(p.getName().equalsIgnoreCase(name))
 		{
 			try
@@ -69,13 +74,15 @@ public class DraftController
 			}
 			catch(CrudException e)
 			{
+				logger.error("unable to delete drafts. ID "+id);
 				throw new CrudException("Sorry "+p.getName()+"!.There is some problem deleting your draft");
 			}
-			
+			logger.info("returning drafts of user "+name);
 			return new ModelAndView("redirect:/draft/"+name);
 		}
 		else
 		{
+			logger.error("ILLEGAL ACCESS BY "+name);
 			throw new UserAccessException("Hello "+p.getName()+" You cannot delete "+name+" drafts");
 		}
 	}
@@ -85,6 +92,7 @@ public class DraftController
 	@RequestMapping(value="/savedraft", method=RequestMethod.POST, consumes="application/json")
 	public  @ResponseBody String  saveDraft(@RequestBody Compose compose, Principal p) 
 	{
+		logger.info("savedraft");
 		if(p != null)
 		{
 			long id = compose.getId();
@@ -96,18 +104,19 @@ public class DraftController
 			Mail m = null;
 			if(id == 0)
 			{
-				
+				logger.info("composing new draft");
 				m = new Mail();
 			}
 			else
 			{
-				
+				logger.info("editing already existing draft with id"+id);
 				try
 				{
 					m = mailService.getById(id);
 				}
 				catch(CrudException e)
 				{
+					logger.error("CRUD EXCEPTION "+p.getName());
 					throw new CrudException("Sorry "+p.getName()+"!.There is some problem saving your draft");
 				}
 			}
@@ -118,15 +127,18 @@ public class DraftController
 			m.setSbjt(subject);
 			try
 			{
+				logger.info("saving draft");
 				mailService.saveMail(m);
 			}
 			catch(CrudException e)
 			{
+				logger.error("CRUD EXCEPTION");
 				throw new CrudException("Sorry "+p.getName()+"!.There is some problem saving your draft");
 			}
-			
+			logger.info("draft saved");
 			return "success";
 		}
+		logger.error("draft not saved");
 		return "failure";
 	}
 	@RequestMapping(value="/edit", method=RequestMethod.POST)

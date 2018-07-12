@@ -221,17 +221,17 @@ public class MailController
 	@RequestMapping(value="/sent/{name}", method=RequestMethod.GET)
 	public ModelAndView showSentMails(@PathVariable String name, Principal p)
 	{
-		name+=".com";
-		if(p.getName().equals(name)) 
+		final String username = name+".com";
+		if(p.getName().equals(username)) 
 		{
 			List<Mail> mails;
 			try 
 			{
-				mails = mailService.getAllMailsByFromaddAndType(name,"sent");
+				mails = mailService.getAllMailsByFromaddAndType(username,"sent");
 			}
 			catch(CrudException e)
 			{
-				throw new CrudException("Sorry "+name+"!.There is some problem retrieving your mail");
+				throw new CrudException("Sorry "+username+"!.There is some problem retrieving your mail");
 			}
 			
 			ModelAndView model = new ModelAndView("sent");
@@ -241,7 +241,7 @@ public class MailController
 		}
 		else
 		{
-			throw new UserAccessException("Hello "+p.getName()+" You cannot access "+name+" sent mails");
+			throw new UserAccessException("Hello "+p.getName()+" You cannot access "+username+" sent mails");
 		}
 	}
 	

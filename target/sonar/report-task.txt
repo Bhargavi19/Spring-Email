@@ -2,5 +2,5 @@ projectKey=org.springframework.boot:mailer
 serverUrl=http://localhost:9000
 serverVersion=6.4.0.25310
 dashboardUrl=http://localhost:9000/dashboard/index/org.springframework.boot:mailer
-ceTaskId=AWSNeYyuolyAH62BD5bk
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AWSNeYyuolyAH62BD5bk
+ceTaskId=AWSN8dLQolyAH62BD5br
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWSN8dLQolyAH62BD5br

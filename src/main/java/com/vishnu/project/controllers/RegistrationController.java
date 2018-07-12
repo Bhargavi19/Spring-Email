@@ -2,6 +2,7 @@ package com.vishnu.project.controllers;
 
 import java.security.Principal;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,31 +27,38 @@ public class RegistrationController
     private UserValidator userValidator;
     
     static final String REGISTRATION = "registration";
+    
+    static final Logger logger =Logger.getLogger(RegistrationController.class);
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) 
     {
+    	logger.info("get request to registration page");
         model.addAttribute("userForm", new User());
 
         return REGISTRATION;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) 
+    {
+    	logger.info("post request to registration page");
         userValidator.validate(userForm, bindingResult);
-
+        final String username = userForm.getUsername();
         if (bindingResult.hasErrors()) 
         {
-        	
+        	logger.error("registration unsuccessful for"+username);
         	return REGISTRATION;
         }
-
+        
+        
         userService.save(userForm);
 
        
         model.addAttribute("successMessage", "You have been registered successfully");
         model.addAttribute("userForm",new User());
         
+        logger.info("registration succesful for "+username);
         return REGISTRATION;
     }
     
@@ -58,6 +66,8 @@ public class RegistrationController
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public ModelAndView welcome(Model model, Principal principal) 
     {
+    	final String userName = principal.getName();
+    	logger.info("user"+userName+" logged in");
     	return new ModelAndView("redirect:/inbox/"+principal.getName());
     	
     }

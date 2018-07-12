@@ -2,6 +2,7 @@ package com.vishnu.project.controllers;
 
 import java.security.Principal;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.vishnu.project.model.Mail;
 import com.vishnu.project.model.User;
 import com.vishnu.project.service.MailService;
 import com.vishnu.project.service.UserService;
+import org.apache.log4j.Logger;
 
 @Controller
 public class ComposeController 
@@ -28,10 +30,12 @@ public class ComposeController
 	@Autowired
 	private UserService service;
 	
+	static final Logger logger =Logger.getLogger(ComposeController.class);
+
 	@RequestMapping(value="/compose", method=RequestMethod.GET)
 	public ModelAndView composeView(Principal p) 
 	{
-		
+		logger.info("compose method called");
 		return new ModelAndView("compose","compose",new Compose());
 	}
 	
@@ -45,12 +49,13 @@ public class ComposeController
 		
 		if(p.getName().equalsIgnoreCase(username))
 		{
+			logger.info("compose method called by "+username);
 			String to = compose.getTo();
 			long ln = compose.getId();
 			User u = service.findByUsername(to);
 			if(u == null)
 			{
-				
+				logger.error(username+" doesnt exists");
 				return "Recipient cannot be found";
 			}
 			else 
@@ -58,17 +63,20 @@ public class ComposeController
 				Mail m = null;
 				if(ln == 0)
 				{
-					
+					logger.info("creating new mail for "+username);
 					m = new Mail();
 					
 				}
 				else
 				{
-					
-					try {
-					m = mailService.getById((long) ln);
+					logger.info("editing existing draft "+username);
+					try 
+					{
+						m = mailService.getById((long) ln);
 					}
-					catch(CrudException e) {
+					catch(CrudException e) 
+					{
+						logger.error("problem sending mail");
 						throw new CrudException("Sorry "+p.getName()+"!.There is some problem sending your mail");
 					}
 				}
@@ -78,14 +86,16 @@ public class ComposeController
 				m.setBody(compose.getBody());
 				m.setSbjt(compose.getSubject());
 				try {
+					logger.info("sending mail");
 					mailService.saveMail(m);
 				}
 				catch(CrudException e) {
+					logger.error("problem sending mail");
 					throw new CrudException("Sorry "+p.getName()+"!.There is some problem sending your mail");
 				}
 				
 				
-				
+				logger.info("mail has been sent successfully");
 				return "The mail has been sent successfully";
 				
 			}
@@ -93,6 +103,7 @@ public class ComposeController
 		}
 		else
 		{
+			logger.error("Illegal access exception");
 			throw new UserAccessException("Hello "+p.getName()+" You cannot compose mails");
 		}
 		
