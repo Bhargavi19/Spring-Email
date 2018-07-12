@@ -27,20 +27,20 @@ This Application has the following features:
   	2) Tomcat
   
   Installing Maven
-  	1) cd /opt/   [Moving to /opt folder for installing 3rd party libraries].
-  	2) wget  http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz [download the compressed file with latest version].
-  	3) sudo tar -xvzf apache-maven-3.3.9-bin.tar.gz  [extract the compressed file].
-  	4) sudo mv apache-maven-3.3.9 maven  [rename the folder name to maven].
-  	5) sudo gedit /etc/profile.d/mavenenv.sh [setting up the environment variable].
+  	1) cd /opt/   [Moving to /opt folder for installing 3rd party libraries] <br>
+  	2) wget  http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz [download the compressed file with latest version].<br>
+  	3) sudo tar -xvzf apache-maven-3.3.9-bin.tar.gz  [extract the compressed file].<br>
+  	4) sudo mv apache-maven-3.3.9 maven  [rename the folder name to maven].<br>
+  	5) sudo gedit /etc/profile.d/mavenenv.sh [setting up the environment variable].<br>
   	6) export M2_HOME=/opt/maven.
-       export PATH=${M2_HOME}/bin:${PATH}  [add the following lines to mavenenv.sh].
+       export PATH=${M2_HOME}/bin:${PATH}  [add the following lines to mavenenv.sh].<br>
     7) sudo chmod +x /etc/profile.d/mavenenv.sh 
 	   sudo source /etc/profile.d/mavenenv.sh  [first make the script as executable and run it in current shell environment].
-	  8) mvn --version [checking the maven version after successful installation].
+	  8) mvn --version [checking the maven version after successful installation].<br>
   	 
    Installing Tomcat
-     1) sudo apt-get install tomcat8 tomcat8-docs tomcat8-examples tomcat8-admin
-     2) systemctl start/restart/status/stop tomcat8 [for starting, restartin, checking status and stopping tomcat respectively ]
+     1) sudo apt-get install tomcat8 tomcat8-docs tomcat8-examples tomcat8-admin<br>
+     2) systemctl start/restart/status/stop tomcat8 [for starting, restartin, checking status and stopping tomcat respectively ]<br>
       
   	
   	
