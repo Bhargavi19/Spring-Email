@@ -65,11 +65,11 @@ This Application has the following features:
       	 
       4) mysql -u root -p [to start the server as root user.]
       
-      5) create database database_name
+      5) create database project
       
-      6) use database_name  [to switch to the database you want to use]
-      
-      7) You can create tables in database_name after this step.
+      6) use project  [to switch to the database you want to use]
+       
+      7) No need to create tables as spring does that automatically for you
       
       8) To exit mysql, type \q and hit enter
       
