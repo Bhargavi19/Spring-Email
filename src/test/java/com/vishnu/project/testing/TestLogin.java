@@ -11,7 +11,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterChainProxy;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -21,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @author: VishnuJammula
  */
 
+@ActiveProfiles("test")
 public class TestLogin extends ContextLoadingTests
 {
 	@Autowired
@@ -29,6 +37,7 @@ public class TestLogin extends ContextLoadingTests
 	@Autowired
     private FilterChainProxy springSecurityFilterChain;
 	
+	MockHttpSession session;
 	private MockMvc mockMvc;
 
 	@Before
@@ -50,14 +59,14 @@ public class TestLogin extends ContextLoadingTests
 	
 	@Test
 	public void testUserLoginSuccess() throws Exception {
-	    RequestBuilder requestBuilder = post("http://localhost:8080/login")
+	   RequestBuilder requestBuilder = post("http://localhost:8080/login")
 	            .param("username", "vishnu@gmail.com")
 	            .param("password", "vishnu123");
 	    		 mockMvc.perform(requestBuilder)
 	            .andDo(print())
 	            .andExpect(redirectedUrl("/welcome"));	
 	    		 
-	  /*  requestBuilder = post("http://localhost:8080/welcome");
+	  /* RequestBuilder requestBuilder = get("http://localhost:8080/welcome");
 	    mockMvc.perform(requestBuilder).andExpect(redirectedUrl("/login"));*/
 	    
 	            
@@ -101,7 +110,23 @@ public class TestLogin extends ContextLoadingTests
 	            .andDo(print())
 	            .andExpect(model().attributeExists("message")).andExpect(model().attribute("message","username couldnt be found"));
 	}
-	
+	 protected void setAuthentication(String user, String password, MockHttpSession session){
+	        Authentication authentication = new UsernamePasswordAuthenticationToken(user, password);
+	        SecurityContext securityContext = SecurityContextHolder.getContext();
+	        securityContext.setAuthentication(authentication);
+
+	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,securityContext);
+	    }
+	 
+	 @Test
+     public void test() throws Exception
+     { 
+         setAuthentication("vishnu@gmail.com","vishnu123",session);
+         
+         RequestBuilder requestBuilder = get("http://localhost:8080/welcome");
+ 	    mockMvc.perform(requestBuilder).andExpect(redirectedUrl("/login"));
+
+     }
 	/* perform registration testing
 	 * 
 	 */
@@ -113,5 +138,7 @@ public class TestLogin extends ContextLoadingTests
 		mockMvc.perform(requestBuilder)
 		.andDo(print()).andExpect(model().hasErrors());	
 	 }*/
+	
+	
 	
 }
