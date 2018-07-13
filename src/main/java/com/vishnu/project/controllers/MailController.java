@@ -2,7 +2,9 @@ package com.vishnu.project.controllers;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class MailController
 			List<Mail> mails = null;
 			try
 			{
-				 mails = mailService.getAllMailsByToaAndMt(name,"sent");
+				 mails = mailService.getAllMailsByToaAndMt(uname,"sent");
 			}
 			catch(CrudException e)
 			{
@@ -193,6 +195,7 @@ public class MailController
 		{
 			List<Mail> toMails = null ; 
 			List<Mail> fromMails = null;
+			
 			try 
 			{
 				 toMails = mailService.getAllMailsByToaAndMt(username,DELETED);
@@ -204,6 +207,7 @@ public class MailController
 			List<Mail> mails = new ArrayList<>();
 			mails.addAll(toMails);
 			mails.addAll(fromMails);
+			
 			ModelAndView model = new ModelAndView("trash");
 			model.addObject(MAILS, mails);
 			

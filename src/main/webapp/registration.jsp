@@ -31,20 +31,21 @@
 <div class="container">
 	<div class="alert alert-info">${successMessage}</div>
 	
-    <form:form method="POST" modelAttribute="userForm" class="form-signin">
+    <form:form method="POST" modelAttribute="userForm" class="form-signin" onsubmit="return validateDetails()">
         <h2 class="form-signin-heading">Create your mail account</h2>
         <spring:bind path="username">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="username" class="form-control" placeholder="Username"
-                            autofocus="true"></form:input>
+                <form:input id="username" type="text" path="username" class="form-control" placeholder="Username@domain.com"
+                            autofocus="true" ></form:input>
                 <form:errors path="username"></form:errors>
+                <span id="error" style="color:red;font-size:22px;"></span>
             </div>
         </spring:bind>
 
         <spring:bind path="password">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
-                <form:errors path="password"></form:errors>
+                <form:errors path="password" ></form:errors>
             </div>
         </spring:bind>
 
@@ -52,7 +53,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="password" path="passwordConfirm" class="form-control"
                             placeholder="Confirm your password"></form:input>
-                <form:errors path="passwordConfirm"></form:errors>
+                <form:errors path="passwordConfirm" ></form:errors>
             </div>
         </spring:bind>
 
@@ -61,6 +62,42 @@
 	<h4 style="margin-top: 40px" class="text-center"><a href="${contextPath}/login">Go back to Login</a></h4>
 </div>
 <!-- /container -->
+<script type="text/javascript">
+function validateDetails()
+{
+	console.log("validate function is called");
+	var username = document.getElementById('username').value;
+	console.log(username);
+	 var reg = /^([A-Za-z0-9_\-\.]+)\@([A-Za-z0-9_\-\.]+)\.([A-Za-z]{2,4})$/;
+	 
+      
+      
+     if (reg.test(username) == true) 
+     {
+    	 
+    	 var position = username.indexOf('.');
+      	 console.log(position);
+         var str = username.slice(position+1);
+         console.log(str);
+         console.log(str.length);
+         if((str.length) > 3)
+         { 
+        	 document.getElementById("error").innerHTML = "invalid user email";
+         	return false;    
+         }
+     }
+     else
+     {
+    	 
+         
+    	 document.getElementById("error").innerHTML = "invalid user email";
+       	 return false;
+     }
+     return true;
+
+	
+}
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>

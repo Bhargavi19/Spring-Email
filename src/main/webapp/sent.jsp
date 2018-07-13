@@ -15,22 +15,27 @@
 <body>
 
 <jsp:include page="header.jsp" />
-
+	<c:if test = "${empty mails}">
+	<h2>YOU HAVE NO SENT MAILS</h2>
+	</c:if>
 	
-	<table  >
+	<c:if test  = "${not empty mails}">
+	<h3>Your sent mails</h3>
+	<div>
+	<table>
 	<c:forEach var="mail" items="${mails}">
 		
-			<div style="margin-top: 15px;">
+				
 				<tr>
-					<td><span style="color:blue;font-size: 20px;">To</span><span> ${mail.toa} </span></td>
-					<td><span style="color:blue;font-size:20px;margin-left:20px;">Subject </span> <span> ${mail.sbjt} </span></td>
+					<td><span style="color:blue;font-size: 20px;margin-left:20px;">To</span><span style="margin-left:30px;"> ${mail.toa} </span></td>
+					<td><span style="color:blue;font-size:20px;margin-left:20px;">Subject </span> <span style="margin-left:30px;"> ${mail.sbjt} </span></td>
 			
 			
-					<td><form action="${contextPath}/view" method="get" >
+					<td><div style="margin-left:30px;margin-right:30px;"><form action="${contextPath}/view" method="get" >
 						<input name="name" value="${pageContext.request.userPrincipal.name}" type="hidden" />
 						<input name="id" value="${mail.id}" type="hidden" />
 						<input type="submit" value="view"/>
-					</form></td>
+					</form></div></td>
 			
 					 
 					   
@@ -40,13 +45,15 @@
 							<input name="id" value="${mail.id}" type="hidden" />
 							<input name="page" value="sent" type="hidden" />
 							<input name="move" value="move" type="hidden" />
-							<input type="submit" value="delete" /></td>
-					</form>
+							<input type="submit" value="delete" /></form>
+					</td>
+					
 				</tr>
-			</div>
+				
 	</c:forEach>	
 	</table>
-
+	</div>
+	</c:if>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
