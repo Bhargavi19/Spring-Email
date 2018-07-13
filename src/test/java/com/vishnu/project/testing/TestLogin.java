@@ -28,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @author: VishnuJammula
  */
 
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 public class TestLogin extends ContextLoadingTests
 {
 	@Autowired
@@ -118,7 +118,7 @@ public class TestLogin extends ContextLoadingTests
 	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,securityContext);
 	    }
 	 
-	 @Test
+	 /*@Test
      public void test() throws Exception
      { 
          setAuthentication("vishnu@gmail.com","vishnu123",session);
@@ -126,7 +126,7 @@ public class TestLogin extends ContextLoadingTests
          RequestBuilder requestBuilder = get("http://localhost:8080/welcome");
  	    mockMvc.perform(requestBuilder).andExpect(redirectedUrl("/login"));
 
-     }
+     }*/
 	/* perform registration testing
 	 * 
 	 */
