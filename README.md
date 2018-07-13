@@ -1,5 +1,5 @@
 #RELEASE NOTES<br>
-bug causing registration error in v.1.2 is fixed <h6 >v.2.0 is the new version</h6>
+bug causing registration error in v.1.2 is fixed <h6 >v.2.2 is the new version</h6>
 # Mailer Application
 
 Overview
