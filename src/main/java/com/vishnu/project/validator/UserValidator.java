@@ -1,5 +1,6 @@
 package com.vishnu.project.validator;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import com.vishnu.project.controllers.RegistrationController;
 import com.vishnu.project.model.User;
 import com.vishnu.project.service.UserService;
 
@@ -17,15 +19,20 @@ public class UserValidator implements Validator
     private UserService userService;
     private static final String USERNAME = "username";
     
-    @Value("${app.password}")
-    private static String PASSWORD;
+    static final Logger logger =Logger.getLogger(RegistrationController.class);
+    
+    /*@Value("${app.password}")
+    private static String PASSWORD;*/
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);
     }
 
     @Override
-    public void validate(Object o, Errors errors) {
+    public void validate(Object o, Errors errors) 
+    {
+    	
+    	logger.info("IN VALIDATION CLASS");
         User user = (User) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, USERNAME, "NotEmpty");
@@ -36,9 +43,9 @@ public class UserValidator implements Validator
             errors.rejectValue(USERNAME, "Duplicate.userForm.username");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, PASSWORD, "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
-            errors.rejectValue(PASSWORD, "Size.userForm.password");
+            errors.rejectValue("password", "Size.userForm.password");
         }
 
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
