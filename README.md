@@ -22,9 +22,10 @@ This Application has the following features:
    
   Steps to build and install.
   
-  Dependencies
+  Dependencies<br>
   	1) Maven<br>
   	2) Tomcat<br>
+	3) MySQL<br>
   
   Installing Maven<br>
   
@@ -46,11 +47,30 @@ This Application has the following features:
 	   
 	8) mvn --version [checking the maven version after successful installation]
   	 
-   Installing Tomcat
+   Installing Tomcat<br>
    
      1) sudo apt-get install tomcat8 tomcat8-docs tomcat8-examples tomcat8-admin
      
      2) systemctl start/restart/status/stop tomcat8 [for starting, restartin, checking status   	    and stopping tomcat respectively ]
+     
+   Installing MySQL server
+      
+      1) sudo apt-get install mysql-server.  
+      
+      2) sudo service mysql start [to start the mysql server].
+      
+      3) sudo /usr/bin/mysql_secure_installation [running the file as root user].
+         This step helps to set root password if not set already and some other configuartions to make mysql secure.
+      	 
+      4) mysql -u root -p [to start the server as root user.]
+      
+      5) create database database_name
+      
+      6) use database_name  [to switch to the database you want to use]
+      
+      7) You can create tables in database_name after this step.
+      
+      8) To exit mysql, type \q and hit enter
       
   	
   	
@@ -65,3 +85,5 @@ This Application has the following features:
    4) If you want to run the artifact locally then issue the command <h3>"java -jar 	 	 	 	 	  artifact-name.extension"</h3> in "target" folder.
    
    5) If you want to deploy the war file to a tomcat container, then copy the war to webapps  	 	  folder in <h3>tomcat(/tomcat/webapps/)</h3> and start the tomcat container.   
+   
+   6) Start the tomcat container and hit <h4>http://localhost:8080/mailer</h4> in browser. Browser redirects you to home page of application
