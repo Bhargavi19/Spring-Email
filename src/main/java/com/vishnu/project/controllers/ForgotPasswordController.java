@@ -24,10 +24,17 @@ public class ForgotPasswordController
 		logger.info("get request for forgot password served");
     	return new ModelAndView("forgotpassword");
     }
+	
     @RequestMapping(value="/forgotpassword", method=RequestMethod.POST)
     public ModelAndView sendMailLink(@RequestParam String name)
     {
-    	User u = userService.findByUsername(name);
+    	ForgetPasswordHelper helper = new ForgetPasswordHelper();
+    	ModelAndView view = new ModelAndView("forgotpassword");
+    	view.addObject("message",helper.getMessage(userService,name));
+    	return view;
+    	
+    	
+    	/*User u = userService.findByUsername(name);
     	ModelAndView view = new ModelAndView("forgotpassword");
     	if(u == null)
     	{
@@ -40,7 +47,9 @@ public class ForgotPasswordController
     		logger.error("user found");
     		view.addObject("message","Password reset link has been sent");
     		return view;
-    	}
+    	}*/
     	
     }
+    	
 }
+

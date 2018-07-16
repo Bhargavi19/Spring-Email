@@ -1,5 +1,6 @@
 package com.vishnu.project.testing;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -11,24 +12,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterChainProxy;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.vishnu.project.controllers.ComposeControllerHelper;
+import com.vishnu.project.controllers.ForgetPasswordHelper;
+import com.vishnu.project.model.Compose;
+import com.vishnu.project.service.MailService;
+import com.vishnu.project.service.UserService;
 
 /*
  * @author: VishnuJammula
  */
 
 //@ActiveProfiles("test")
+
 public class TestLogin extends ContextLoadingTests
 {
 	@Autowired
@@ -37,13 +41,24 @@ public class TestLogin extends ContextLoadingTests
 	@Autowired
     private FilterChainProxy springSecurityFilterChain;
 	
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	MailService mailService;
+	
+	
 	MockHttpSession session;
 	private MockMvc mockMvc;
 
 	@Before
-	public void setup() {
+	public void setup() 
+	{
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain)
                 .build();
+		
+				
 	}
 
 	@Test
@@ -66,8 +81,6 @@ public class TestLogin extends ContextLoadingTests
 	            .andDo(print())
 	            .andExpect(redirectedUrl("/welcome"));	
 	    		 
-	  /* RequestBuilder requestBuilder = get("http://localhost:8080/welcome");
-	    mockMvc.perform(requestBuilder).andExpect(redirectedUrl("/login"));*/
 	    
 	            
 	            
@@ -110,35 +123,29 @@ public class TestLogin extends ContextLoadingTests
 	            .andDo(print())
 	            .andExpect(model().attributeExists("message")).andExpect(model().attribute("message","username couldnt be found"));
 	}
-	 protected void setAuthentication(String user, String password, MockHttpSession session){
-	        Authentication authentication = new UsernamePasswordAuthenticationToken(user, password);
-	        SecurityContext securityContext = SecurityContextHolder.getContext();
-	        securityContext.setAuthentication(authentication);
-
-	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,securityContext);
-	    }
 	 
-	 /*@Test
-     public void test() throws Exception
-     { 
-         setAuthentication("vishnu@gmail.com","vishnu123",session);
-         
-         RequestBuilder requestBuilder = get("http://localhost:8080/welcome");
- 	    mockMvc.perform(requestBuilder).andExpect(redirectedUrl("/login"));
-
-     }*/
-	/* perform registration testing
-	 * 
-	 */
 	
-	/*@Test
-	public void registrationTest() throws Exception
+	@Test
+	public void forgotPasswordTesterWithValidUserName() 
 	{
-		RequestBuilder requestBuilder = post("http://localhost:8080/registration");
-		mockMvc.perform(requestBuilder)
-		.andDo(print()).andExpect(model().hasErrors());	
-	 }*/
+		ForgetPasswordHelper helper = new ForgetPasswordHelper();
+		assertEquals("Password reset link has been sent",helper.getMessage(userService,"vishnu@gmail.com"));
+	}
+	
+	@Test
+	public void forgotPasswordTesterWithInvalidUserName() 
+	{
+		ForgetPasswordHelper helper = new ForgetPasswordHelper();
+		assertEquals("username couldnt be found",helper.getMessage(userService,"vhnu@gmail.com"));
+	}
 	
 	
-	
+	@Test
+	public void ComposeControllerTestWithInvalidUsername()
+	{
+		ComposeControllerHelper helper = new ComposeControllerHelper();
+		Compose compose = new Compose();
+		compose.setTo("xyz@gmail.com");
+		assertEquals("Recipient cannot be found",helper.composeMail("xyz@gmail.com", compose , userService, mailService));
+	}
 }

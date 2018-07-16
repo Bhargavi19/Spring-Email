@@ -49,58 +49,11 @@ public class ComposeController
 		
 		if(p.getName().equalsIgnoreCase(username))
 		{
-			logger.info("compose method called by "+username);
-			String to = compose.getTo();
-			long ln = compose.getId();
-			User u = service.findByUsername(to);
-			if(u == null)
-			{
-				logger.error(username+" doesnt exists");
-				return "Recipient cannot be found";
-			}
-			else 
-			{
-				Mail m = null;
-				if(ln == 0)
-				{
-					logger.info("creating new mail for "+username);
-					m = new Mail();
-					
-				}
-				else
-				{
-					logger.info("editing existing draft "+username);
-					try 
-					{
-						m = mailService.getById((long) ln);
-					}
-					catch(CrudException e) 
-					{
-						logger.error("problem sending mail");
-						throw new CrudException("Sorry "+p.getName()+"!.There is some problem sending your mail");
-					}
-				}
-				m.setFrma(username);
-				m.setMt("sent");
-				m.setToa(compose.getTo());
-				m.setBody(compose.getBody());
-				m.setSbjt(compose.getSubject());
-				try {
-					logger.info("sending mail");
-					mailService.saveMail(m);
-				}
-				catch(CrudException e) {
-					logger.error("problem sending mail");
-					throw new CrudException("Sorry "+p.getName()+"!.There is some problem sending your mail");
-				}
-				
-				
-				logger.info("mail has been sent successfully");
-				return "The mail has been sent successfully";
-				
-			}
+			ComposeControllerHelper composeHelper = new ComposeControllerHelper();
+			return composeHelper.composeMail(username, compose, service, mailService);
 			
-		}
+		} // if end
+		
 		else
 		{
 			logger.error("Illegal access exception");
