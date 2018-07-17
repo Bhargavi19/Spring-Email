@@ -1,5 +1,7 @@
 #RELEASE NOTES<br>
-bug causing registration error in v.1.2 is fixed <h6 >v.2.2 is the new version</h6>
+bug causing registration error in v.1.2 is fixed <strong >v.2.2 is the new version</strong>
+
+
 # Mailer Application
 
 Overview
@@ -67,30 +69,30 @@ This Application has the following features:
       
       5) create database <database name>;
       
-      6) create user '<name of user>'@'localhost' identified '<user password>';  <br>
+      6) create user '<name of user>'@'localhost' identified '<user password>' ;  [creating user]
       
       
-      7) grant all privileges on <database name>.* to '<name of user>'@'localhost';
+      7) grant all privileges on <database name>.* to '<name of user>'@'localhost' ; [granting user all privileges on database]
       
-      8) To exit mysql, type \q and hit enter <br>
+      8) To exit mysql, type \q and hit enter .
       
       9) mysql -u <name of user> -p [to start the server with user you created]
       
-      10) use <database name>  [to switch to the database you want to use]
+      10) use <database name>;  [to switch to the database you want to use]
        
       11) No need to create tables as spring does that automatically for you
       
       12) To exit mysql, type \q and hit enter
       
   	
-After creating a new user and database in mysql, it is now time to change application.properties file<br> 	
+After creating a new user and database in mysql, it is now time to change <strong>application.properties file</strong><br> 	
 
-Go to the application.properties file present in src/main/resources of your project directory and provide the following properties:<br>
-
-spring.datasource.url = jdbc:mysql://localhost:{mysql port}/<database name><br>
-spring.datasource.username = <name of user><br>
-spring.datasource.password = <password of user><br>
-
+Go to the application.properties file present in <strong>src/main/resources</strong> of your project directory and provide the following properties:<br>
+<strong>
+spring.datasource.url = jdbc:mysql://localhost:{mysql port}/{database name} <br>
+spring.datasource.username = {name of user} <br>
+spring.datasource.password = {password of user} <br>
+</strong>
   After installing the required dependencies, the steps to be followed are: 	
   	
    1) Go to your project folder where pom.xml file is present.
