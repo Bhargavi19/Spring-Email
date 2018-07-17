@@ -36,8 +36,8 @@ table {
 	<c:forEach var="mail" items="${mails}">
 		<div style="margin-top: 15px;">
 			<tr>
-			<td><span style="color:blue;font-size: 20px;margin-right:20px" >From</span></td><td><span style="margin-right:20px"> ${mail.frma} </span></td>
-			<td><span style="color:blue;font-size: 20px;margin-right:20px">Subject</span></td> <td> <span style="margin-right:20px">${mail.sbjt}</span></td>
+			<td><span style="color:blue;font-size: 20px;margin-right:20px" >From</span></td><td><span style="margin-right:20px"> ${mail.fromAddress} </span></td>
+			<td><span style="color:blue;font-size: 20px;margin-right:20px">Subject</span></td> <td> <span style="margin-right:20px">${mail.subject}</span></td>
 			<%-- <span><a href="edit/${pageContext.request.userPrincipal.name}/${mail.id}">edit draft</a></span>
 			<span><a href="delete/${pageContext.request.userPrincipal.name}/${mail.id}">delete draft</a></span>
 			<br><br> --%>

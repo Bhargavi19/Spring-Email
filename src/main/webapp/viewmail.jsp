@@ -20,9 +20,9 @@
 	<div>
 	<c:set var="mail" value="${mail}"/>
 	<h3 style="margin-left:20px">From</span>
-	<span style="margin-left:20px">${mail.frma}</span><br>
+	<span style="margin-left:20px">${mail.fromAddress}</span><br>
 	<h3 style="margin-left:20px">Subject</span>
-	<span style="margin-left:20px">${mail.sbjt}</span><br>
+	<span style="margin-left:20px">${mail.subject}</span><br>
 	<h3 style="margin-left:20px;">body</h3>
 	<span style="margin-left:20px;font-size:20px">${mail.body}</span><br>
 	</div>

@@ -24,8 +24,8 @@
 	<table>
 	<c:forEach var="mail" items="${mails}">
 			<tr>
-			<td><span style="color:blue;font-size:20px;">From</span> <span style="margin-left:25px;"> ${mail.frma} </span></td>
-			<td><span style="color:blue;margin-left:20px;font-size:20px;">Subject</span> <span style="margin-left:25px;" > ${mail.sbjt} </span></td>
+			<td><span style="color:blue;font-size:20px;">From</span> <span style="margin-left:25px;"> ${mail.fromAddress} </span></td>
+			<td><span style="color:blue;margin-left:20px;font-size:20px;">Subject</span> <span style="margin-left:25px;" > ${mail.subject} </span></td>
 			<%-- <span><a href="/view/${pageContext.request.userPrincipal.name}/${mail.id}">view mail</a></span> --%>
 			<td><div style="margin-left:30px;margin-right:30px;" ><form action="${contextPath}/view" method="get">
 				<input name="name" value="${pageContext.request.userPrincipal.name}" type="hidden" />

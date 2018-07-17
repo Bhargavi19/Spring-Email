@@ -24,8 +24,8 @@
 	<table>
 	<c:forEach var="mail" items="${mails}">
 			<tr>
-			<td><span style="margin-left:20px;color:blue;font-size:20px;">From</span> <span style="margin-left:20px;"> ${mail.frma} </span></td>
-			<td><span style="margin-left:20px;color:blue;font-size:20px;">Subject</span> <span style="margin-left:20px;"> ${mail.sbjt} </span></td>
+			<td><span style="margin-left:20px;color:blue;font-size:20px;">From</span> <span style="margin-left:20px;"> ${mail.fromAddress} </span></td>
+			<td><span style="margin-left:20px;color:blue;font-size:20px;">Subject</span> <span style="margin-left:20px;"> ${mail.subject} </span></td>
 			<%-- <span><a href="/restore/${pageContext.request.userPrincipal.name}/${mail.id}">restore mail</a></span>
 			<span></span><a href="/delete/${pageContext.request.userPrincipal.name}/${mail.id}/perm">delete mail permanently</a><br><br></span> --%>
 			<td><div style="margin-left:25px;"><form action="${contextPath}/restore" method="get">

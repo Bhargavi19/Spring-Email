@@ -23,11 +23,12 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.vishnu.project.controllers.ComposeControllerHelper;
-import com.vishnu.project.controllers.ForgetPasswordHelper;
-import com.vishnu.project.model.Compose;
-import com.vishnu.project.service.MailService;
-import com.vishnu.project.service.UserService;
+import com.mailer.controller.ComposeController;
+
+import com.mailer.controller.ForgotPasswordController;
+import com.mailer.model.ComposeInfo;
+import com.mailer.service.MailService;
+import com.mailer.service.UserService;
 
 public class LoginTests extends MailerAbstractTestClass 
 {
@@ -125,14 +126,14 @@ public class LoginTests extends MailerAbstractTestClass
 	@Test
 	public void forgotPasswordTesterWithValidUserName() 
 	{
-		ForgetPasswordHelper helper = new ForgetPasswordHelper();
+		ForgotPasswordController helper = new ForgotPasswordController();
 		assertEquals("Password reset link has been sent",helper.getMessage(userService,"vishnu@gmail.com"));
 	}
 	
 	@Test
 	public void forgotPasswordTesterWithInvalidUserName() 
 	{
-		ForgetPasswordHelper helper = new ForgetPasswordHelper();
+		ForgotPasswordController helper = new ForgotPasswordController();
 		assertEquals("username couldnt be found",helper.getMessage(userService,"vhnu@gmail.com"));
 	}
 	
@@ -140,10 +141,10 @@ public class LoginTests extends MailerAbstractTestClass
 	@Test
 	public void ComposeControllerTestWithInvalidUsername()
 	{
-		ComposeControllerHelper helper = new ComposeControllerHelper();
-		Compose compose = new Compose();
-		compose.setTo("xyz@gmail.com");
-		assertEquals("Recipient cannot be found",helper.composeMail("xyz@gmail.com", compose , userService, mailService));
+		ComposeController compose = new ComposeController();
+		ComposeInfo composeInfo = new ComposeInfo();
+		composeInfo.setTo("xyz@gmail.com");
+		assertEquals("Recipient cannot be found",compose.composeMail("xyz@gmail.com", composeInfo, userService, mailService));
 	}
 	 
 	@Test
@@ -164,7 +165,7 @@ public class LoginTests extends MailerAbstractTestClass
 	 @Test
 	 public void Logout() throws Exception 
 	 {
-	    	  mockMvc.perform(logout());
+	    	  mockMvc.perform(logout()).andExpect(unauthenticated());
 	 }
 	 
 }

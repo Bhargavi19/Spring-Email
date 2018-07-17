@@ -27,8 +27,8 @@
 		
 				
 				<tr>
-					<td><span style="color:blue;font-size: 20px;margin-left:20px;">To</span><span style="margin-left:30px;"> ${mail.toa} </span></td>
-					<td><span style="color:blue;font-size:20px;margin-left:20px;">Subject </span> <span style="margin-left:30px;"> ${mail.sbjt} </span></td>
+					<td><span style="color:blue;font-size: 20px;margin-left:20px;">To</span><span style="margin-left:30px;"> ${mail.toAddress} </span></td>
+					<td><span style="color:blue;font-size:20px;margin-left:20px;">Subject </span> <span style="margin-left:30px;"> ${mail.subject} </span></td>
 			
 			
 					<td><div style="margin-left:30px;margin-right:30px;"><form action="${contextPath}/view" method="get" >
