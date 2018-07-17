@@ -12,7 +12,7 @@ import com.mailer.controller.RegistrationController;
 import com.mailer.model.User;
 import com.mailer.service.UserService;
 /**
- * 
+ * This class has methods to validate the data entered by the user in registration form
  * @author vishnu
  *
  */
@@ -25,13 +25,20 @@ public class UserValidator implements Validator
     
     static final Logger logger =Logger.getLogger(RegistrationController.class);
     
-    /*@Value("${app.password}")
-    private static String PASSWORD;*/
+    
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);
     }
-
+    
+    /**
+     * @param  o contains the user data type casted to User class
+     * @param  errors holds the errors that has to be displayed to the user
+     *
+     * This method validates the info entered by the user. 
+     * If the user is already registered or information entered doesn't meet the specified criteria, then the information entered by user is discarded
+     * 
+     */
     @Override
     public void validate(Object o, Errors errors) 
     {

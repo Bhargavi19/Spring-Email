@@ -11,7 +11,8 @@ import com.mailer.model.User;
 import com.mailer.repository.UserRepository;
 import com.mailer.service.UserService;
 /**
- * 
+ * This class implements the UserService interface
+ * This class provides methods to persist the information provided by new users.
  * @author vishnu
  *
  */
@@ -23,7 +24,11 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;*/
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    
+    /**
+     * This method persists the information provided by the user.
+     * @param user is the User pojo that has to be persisted 
+     */
     @Override
     public void save(User user) 
     {
@@ -31,7 +36,11 @@ public class UserServiceImpl implements UserService {
        // user.setRoles(new HashSet<>(/*roleRepository.findAll()*/));
         userRepository.save(user);
     }
-
+    /**
+     * This method is used to find user based on username
+     * @param username is the username of the user
+     * @return User object is returned
+     */
     @Override
     public User findByUsername(String username) 
     {

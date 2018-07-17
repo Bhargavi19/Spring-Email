@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * 
  * @author vishnu
- *
+ * This is User entity class
  */
 @Entity
 @Table(name = "user")

@@ -75,11 +75,12 @@ public class DraftController
 	}
 	
 	/**
-	 * 
-	 * @param name
-	 * @param id
-	 * @param p
-	 * @return
+	 * This method handles all requests to delete a particular draft
+	 * @param name represents the username of signed in user
+	 * @param id is the id of the draft to be deleted
+	 * @param p gives info about currently authenticated user
+	 * @return view with remaining drafts are returned
+	 * @exception throws UserAccessException,CrudException
 	 */
 	@RequestMapping(value="draft/delete/{name}/{id}", method=RequestMethod.GET)
 	public ModelAndView deleteDarft(@PathVariable String name, @PathVariable Long id,Principal p)
@@ -108,10 +109,10 @@ public class DraftController
 	
 	
 	/**
-	 * 
-	 * @param compose
-	 * @param p
-	 * @return
+	 * This method handles all requests to save drafts
+	 * @param compose is instance ComposeInfo which holds the draft information 
+	 * @param p gives information about currently authenticated user
+	 * @return response in form String is returned whether draft is saved successfully or not
 	 */
 	@RequestMapping(value="/savedraft", method=RequestMethod.POST, consumes="application/json")
 	public  @ResponseBody String  saveDraft(@RequestBody ComposeInfo compose, Principal p) 
@@ -167,9 +168,9 @@ public class DraftController
 	}
 	
 	/**
-	 * 
-	 * @param id
-	 * @return
+	 * This method handles all requests to edit a particular draft
+	 * @param id is the id of draft to be edited
+	 * @return view with draft information in it is returned
 	 */
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
 	public ModelAndView editDraft(@RequestParam Long id)
