@@ -18,9 +18,8 @@ import com.vishnu.project.controllers.LoginController;
 import com.vishnu.project.controllers.RegistrationController;
 import com.vishnu.project.service.UserService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes=MailerApplication.class)
-public class ContextLoadingTests 
+
+public  class ContextLoadingTests extends MailerAbstractTestClass 
 {
 	@Autowired
 	private LoginController mockLogin;
@@ -93,3 +92,7 @@ public class ContextLoadingTests
 	 
 }
 
+
+/*import org.junit.runner.RunWith;
+
+*/

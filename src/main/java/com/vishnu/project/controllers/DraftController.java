@@ -34,7 +34,7 @@ public class DraftController
 	public ModelAndView showDrafts(@PathVariable String name, Principal p)
 	{
 		final String username = name+".com";
-		logger.info("show drafts is called by "+username);
+		logger.info("show drafts is called by "+username+" principal is "+p.getName());
 		if(p.getName().equalsIgnoreCase(username))
 		{
 			List<Mail> mails;
