@@ -1,13 +1,14 @@
 package com.vishnu.project.testing;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.testSecurityContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 import javax.servlet.Filter;
 
 import org.junit.Before;
@@ -21,6 +22,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
 import com.mailer.exception.UserAccessException;
+import com.mailer.model.Mail;
+import com.mailer.service.MailService;
 import com.mailer.service.UserService;
 
 @WithMockUser
@@ -29,6 +32,9 @@ public class ControllerTests extends MailerAbstractTestClass
 {
 	@Autowired
     private UserService userService;
+	
+	@Autowired
+	private MailService mailService;
     
 	@Autowired
     private WebApplicationContext context;
@@ -52,26 +58,40 @@ public class ControllerTests extends MailerAbstractTestClass
     
     
     @Test
-  	public void testgetWelcomeSuccess() throws Exception 
+    public void testGetWelcomeSuccessWithDefaultUser() throws Exception 
     {
   	  mockMvc.perform(get("/welcome"))
-  	  //.andExpect(status().isOk())
+  	  	.andExpect(status().is3xxRedirection())
   	  	.andDo(print())
   	  	.andExpect(view().name("redirect:/inbox/user"))
   	  	.andExpect(redirectedUrl("/inbox/user"));
     
-    }  
+    }
+    
     
     @Test
-  	public void testgetDefaultPage() throws Exception 
+    @WithMockUser(username = "testuser@gmail.com",password="testpassword" )
+  	public void testGetWelcomeSuccessWithValidUser() throws Exception 
+    {
+  	  mockMvc.perform(get("/welcome"))
+  	  	.andDo(print())
+  	  	.andExpect(view().name("redirect:/inbox/testuser@gmail.com"))
+  	  	.andExpect(redirectedUrl("/inbox/testuser@gmail.com"));
+    
+    }  
+    
+     @Test
+  	public void testGetinboxPageWithDefaultUser() throws Exception 
     {
   	  mockMvc.perform(get("/"))
-  	  //.andExpect(status().isOk())
+  	  .andExpect(status().is3xxRedirection())
   	  .andDo(print())
   	  .andExpect(view().name("redirect:/inbox/user"))
   	  .andExpect(redirectedUrl("/inbox/user"));
     
-    }  
+    }
+     
+    
     
     @Test
   	public void testgetDefaultErrorPage() throws Exception 
@@ -107,22 +127,23 @@ public class ControllerTests extends MailerAbstractTestClass
     	}
     	
     }    
+    
     @Test
     public void showMailsTestWithInvalidUser() throws Exception
     {
-    	mockMvc.perform(get("/view").param("name", "vishnu@gmail.com").param("id", "19"))
+    	mockMvc.perform(get("/view").param("name", "testuser@gmail.com").param("id", "19"))
     	//.andExpect(model().attributeExists("mail"))
     	.andDo(print())
     	.andExpect(view().name("Exception"))
-    	.andExpect(model().attribute("errMsg","Hello user You cannot view vishnu@gmail.com mails" ));
+    	.andExpect(model().attribute("errMsg","Hello user You cannot view testuser@gmail.com mails" ));
     	
     }
     
     @Test
-    @WithMockUser(username = "vishnu@gmail.com",password="vishnu123" )
+    @WithMockUser(username = "testuser@gmail.com",password="testpassword" )
     public void showMailsTestWithValidUser() throws Exception
     {
-    	mockMvc.perform(get("/view").param("name", "vishnu@gmail.com").param("id", "19"))
+    	mockMvc.perform(get("/view").param("name", "testuser@gmail.com").param("id", "1"))
     	.andDo(print())
     	.andExpect(view().name("viewmail"))
     	.andExpect(model().attributeExists("mail"));
@@ -135,5 +156,35 @@ public class ControllerTests extends MailerAbstractTestClass
     	mockMvc.perform(get("/view").param("name", "user").param("id", "20"))
     	.andDo(print())
     	.andExpect(view().name("viewmail")).andExpect(model().attributeDoesNotExist("mail"));
+    }
+    
+    
+    @Test
+    @WithMockUser(username = "user@gmail.com",password="password" )
+    public void showInboxTestSuccess() throws Exception
+    {
+    	Mail m = new Mail();
+    	
+    	m.setToAddress("user@gmail.com");
+    	m.setFromAddress("user@gmail.com");
+    	m.setType("mail");
+    	m.setSubject("test subject");
+    	m.setBody("test body");
+    	
+    	mailService.saveMail(m);
+    	
+    	mockMvc.perform(get("/inbox/user@gmail.com")).andDo(print())
+    	.andExpect(status().isOk())
+    	.andExpect(view().name("inbox")).andExpect(model().attributeExists("mails"));
+    }
+    
+    @Test
+    public void showInboxTestFail() throws Exception
+    {
+    	
+    	mockMvc.perform(get("/inbox/dummyuser@gmail.com")).andDo(print())
+    	.andExpect(status().isOk())
+    	.andExpect(view().name("Exception"))
+    	.andExpect(model().attribute("errMsg","Hello user You cannot access dummyuser@gmail inbox mails"));
     }
 }

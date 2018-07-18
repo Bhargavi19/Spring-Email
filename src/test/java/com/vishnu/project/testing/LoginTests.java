@@ -1,8 +1,11 @@
 package com.vishnu.project.testing;
-
+/**
+ * @author vishnu
+ */
 import static org.junit.Assert.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.logout;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.testSecurityContext;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -17,19 +20,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.mailer.controller.ComposeController;
-
 import com.mailer.controller.ForgotPasswordController;
 import com.mailer.model.ComposeInfo;
+import com.mailer.model.User;
 import com.mailer.service.MailService;
 import com.mailer.service.UserService;
 
+//@WithMockUser
+@Transactional
 public class LoginTests extends MailerAbstractTestClass 
 {
 	@Autowired
@@ -45,22 +52,33 @@ public class LoginTests extends MailerAbstractTestClass
 	@Autowired
 	MailService mailService;
 	
-	
-	MockHttpSession session;
 	private MockMvc mockMvc;
+	
+	final String USERNAME = "testuser@gmail.com";
+	final String PASSWORD = "testpassword";
+	
+	private User u;
 
 	@Before
 	public void setup() 
 	{
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(springSecurityFilterChain)
+		
+		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+				.defaultRequest(get("/").with(testSecurityContext()))
+					.addFilter(springSecurityFilterChain)
                 .build();
+		
+		u = new User();
+		u.setUsername("mockuser@gmail.com");
+		u.setPassword("mock123");
+		userService.save(u);
 		
 	 }
 
 	@Test
 	public void testLoginPageLoading() throws Exception 
 	{
-		mockMvc.perform(get("/login")).andExpect(status().isOk()).andExpect(view().name("login"));
+		mockMvc.perform(get("/login")).andExpect(view().name("login"));
 	}
 	@Test
 	public void testRegistrationPageLoading() throws Exception 
@@ -69,10 +87,13 @@ public class LoginTests extends MailerAbstractTestClass
 	}
 	
 	@Test
-	public void testUserLoginSuccess() throws Exception {
+	public void testUserLoginSuccess() throws Exception 
+	{
+		
+			
 	   RequestBuilder requestBuilder = post("http://localhost:8080/login")
-	            .param("username", "vishnu@gmail.com")
-	            .param("password", "vishnu123");
+	            .param("username", USERNAME)
+	            .param("password", PASSWORD);
 	    		 mockMvc.perform(requestBuilder)
 	            .andDo(print())
 	            .andExpect(redirectedUrl("/welcome"));	
@@ -102,7 +123,7 @@ public class LoginTests extends MailerAbstractTestClass
 	public void forgotPasswordWithValidUsername() throws Exception
 	{
 		RequestBuilder requestBuilder = post("http://localhost:8080/forgotpassword")
-	            .param("name", "vishnu@gmail.com");
+	            .param("name", USERNAME);
 	            
 	    		 mockMvc.perform(requestBuilder)
 	            .andDo(print())
@@ -150,8 +171,8 @@ public class LoginTests extends MailerAbstractTestClass
 	@Test
 	public void testLoginSuccess() throws Exception 
 	{
-	  mockMvc
-	  .perform(formLogin().user("vishnu@gmail.com").password("vishnu123"))
+	   mockMvc
+	  .perform(formLogin().user(u.getUsername()).password("dummy123"))
 	  .andExpect(authenticated());
 	}
 	
@@ -159,9 +180,10 @@ public class LoginTests extends MailerAbstractTestClass
 	public void testLoginFailure() throws Exception
 	{
 		mockMvc
-		  .perform(formLogin().user("vishnu@gmail.com").password("vishnu12"))
-		  .andExpect(unauthenticated());
+	    .perform(formLogin().user(u.getUsername()).password("dummy12"))
+		.andExpect(unauthenticated());
 	}
+	
 	 @Test
 	 public void Logout() throws Exception 
 	 {
