@@ -16,7 +16,7 @@ import com.mailer.model.User;
 import com.mailer.service.UserService;
 import com.mailer.validator.UserValidator;
 /**
- * 
+ * This class comprises of controllers to handle user registration
  * @author vishnu
  *
  */
@@ -35,8 +35,8 @@ public class RegistrationController
     static final Logger logger =Logger.getLogger(RegistrationController.class);
     /**
      * 
-     * @param model
-     * @return
+     * @param model holds the model object
+     * @return this controller returns the registration page
      */
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) 
@@ -46,12 +46,13 @@ public class RegistrationController
 
         return REGISTRATION;
     }
+    
     /**
-     * 
-     * @param userForm
-     * @param bindingResult
-     * @param model
-     * @return
+     * This method is responsible for handling the user registration
+     * @param userForm consists of data entered by the user
+     * @param bindingResult has the errors resulted due to information submitted by the user
+     * @param model holds the model object
+     * @return returns registration view with message whether user is registered successfully or not
      */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) 
@@ -77,10 +78,10 @@ public class RegistrationController
     }
     
     /**
-     * 
-     * @param model
-     * @param principal
-     * @return
+     * This is where user lands after signing in and is redirected to inbox
+     * @param model to hold the model object
+     * @param principal to get the details of currently authenticated user
+     * @return This method redirects to inbox page after user sign in
      */
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public ModelAndView welcome(Model model, Principal principal) 

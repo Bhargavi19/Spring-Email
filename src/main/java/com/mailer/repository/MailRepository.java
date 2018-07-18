@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.mailer.model.Mail;
 
 /**
- * 
+ * This repository extends JpaRepository in which custom methods are declared depending upon our requirements
  * @author vishnu
  *
  */

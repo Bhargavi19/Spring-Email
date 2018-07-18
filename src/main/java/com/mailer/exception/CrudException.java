@@ -2,7 +2,9 @@ package com.mailer.exception;
 /**
  * 
  * @author vishnu
- *
+ * This class is used to throw custom exception
+ * CrudException extends RuntimeException
+ * 
  */
 public class CrudException extends RuntimeException
 {

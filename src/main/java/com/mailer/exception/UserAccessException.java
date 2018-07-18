@@ -2,6 +2,8 @@ package com.mailer.exception;
 /**
  * 
  * @author vishnu
+ * This class is used to throw custom exception
+ * UserAccessException is thrown when one user tries to access another user resources
  *
  */
 public class UserAccessException extends RuntimeException

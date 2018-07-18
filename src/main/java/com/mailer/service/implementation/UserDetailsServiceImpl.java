@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mailer.model.User;
 import com.mailer.repository.UserRepository;
 /**
+ * This class implements the UserDetailsService.
  * 
  * @author vishnu
  *
@@ -24,7 +25,12 @@ import com.mailer.repository.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService{
     @Autowired
     private UserRepository userRepository;
-
+    
+    /**
+     * @param username provides the username of the User
+     * @return UserDetails has necessary information about the user
+     * @exception UsernameNotFoundException if the username is not found 
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username)  

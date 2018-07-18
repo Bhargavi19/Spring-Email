@@ -22,7 +22,7 @@ import com.mailer.exception.UserAccessException;
 import com.mailer.model.Mail;
 import com.mailer.service.MailService;
 /**
- * 
+ * This class comprises of controllers to handle inbox, sent mails and trash
  * @author vishnu
  *
  */
@@ -41,11 +41,13 @@ public class MailController
 	private static final String DELETED = "deleted";
 	private static final String MAILS = "mails";
 	private static final String TYPE = "mail";
+	
 	/**
-	 * 
-	 * @param name
-	 * @param p
-	 * @return
+	 * This controller handles all the get requests to inbox.
+	 * @param name is username of current user who is logged in
+	 * @param p gives details about currently authenticated user
+	 * @return inbox page is returned with inbox mails in the page
+	 * @exception throws UserAccessException, CrudException 
 	 */
 	@RequestMapping(value="/inbox/{name}", method=RequestMethod.GET)
 	public ModelAndView getAllMails(@PathVariable String name, Principal p)
@@ -81,7 +83,12 @@ public class MailController
 		}
 	}
 	
-	
+	/**s
+	 * This is the exception handler for UserAccessException 
+	 * This method returns a page with error message in it
+	 * @param ex containing the trace about the exception
+	 * @return error page is returned with error message int
+	 */
 	@ExceptionHandler(UserAccessException.class)
 	public ModelAndView handleCustomException(UserAccessException ex) 
 	{
@@ -91,6 +98,12 @@ public class MailController
 		return model;
 	}
 	
+	 /** This is the exception handler for CrudException 
+	 * This method returns a page with error message in it
+	 * @param ex containing the trace about the exception
+	 * @return Exception  page is returned with error message in it
+	 */
+
 	@ExceptionHandler(CrudException.class)
 	public ModelAndView handleCustomException(CrudException ex) 
 	{
@@ -101,11 +114,12 @@ public class MailController
 	}
 	
 	/**
-	 * 
-	 * @param name
-	 * @param id
-	 * @param p
-	 * @return
+	 * This method handles all the get requests to view a particular mail
+	 * @param name is username of user currently signed in 
+	 * @param id is the ID field of the mail
+	 * @param p gives details about currently authenticated user
+	 * @return returns a view page with mail content embedded in it
+	 * @exception throws UserAccessException,CrudException
 	 */
 	@RequestMapping(value="/view", method=RequestMethod.GET)
 	public ModelAndView showMail(@RequestParam String name, @RequestParam Long id, Principal p)
@@ -137,13 +151,14 @@ public class MailController
 	}
 	
 	/**
+	 * This method handles all the get requests to delete a particular mail
+	 * @param name is username of user currently signed in 
+	 * @param id is the ID field of the mail
+	 * @param p gives details about currently authenticated user
+	 * @param move indicates whether has to be deleted permanently or moved to trash box
 	 * 
-	 * @param name
-	 * @param id
-	 * @param page
-	 * @param move
-	 * @param p
-	 * @return
+	 * @return return a view page with list of remaining mails
+	 * @exception throws UserAccessException,CrudException 
 	 */
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public ModelAndView deleteMail(@RequestParam String name,@RequestParam Long id,@RequestParam String page,@RequestParam String move, Principal p)
@@ -189,11 +204,12 @@ public class MailController
 	}
 	
 	/**
-	 * 
-	 * @param name
-	 * @param id
-	 * @param p
-	 * @return
+	 * This method handles all the get requests to restore a particular mail
+	 * @param name is username of user currently signed in 
+	 * @param id is the ID field of the mail
+	 * @param p gives details about currently authenticated user
+	 * @return returns a view  with remaining trash mails in it
+	 * @exception throws UserAccessException, CrudException
 	 */
 	@RequestMapping(value="/restore", method=RequestMethod.GET)
 	public ModelAndView restoreMail(@RequestParam String name,@RequestParam Long id, Principal p)
@@ -220,10 +236,11 @@ public class MailController
 	}
 	
 	/**
-	 * 
-	 * @param name
-	 * @param p
-	 * @return
+	 * This method handles all the get requests to view all trash mails
+	 * @param name is username of user currently signed in 
+	 * @param p gives details about currently authenticated user
+	 * @return returns a view page with all trash mails in it
+	 * @exception throws UserAccessException, CrudException
 	 */
 	@RequestMapping(value="/trash/{name}", method=RequestMethod.GET)
 	public ModelAndView showTrash(@PathVariable String name, Principal p)
@@ -267,11 +284,12 @@ public class MailController
 	}
 	
 	/**
-	 * 
-	 * @param name
-	 * @param p
-	 * @return
-	 */
+	 *  This method handles all the get requests to view all sent mails
+	 * @param name is username of user currently signed in 
+	 * @param p gives details about currently authenticated user
+	 * @return returns a view page with all sent mails  in it
+	 * @exception throws UserAccessException,CrudException  
+	*/
 	@RequestMapping(value="/sent/{name}", method=RequestMethod.GET)
 	public ModelAndView showSentMails(@PathVariable String name, Principal p)
 	{

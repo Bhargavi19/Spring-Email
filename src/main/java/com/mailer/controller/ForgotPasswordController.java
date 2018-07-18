@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mailer.model.User;
 import com.mailer.service.UserService;
 /**
- * 
+ * This class comprises methods to handle forgot password feature 
  * @author vishnu
  *
  */
@@ -22,8 +22,8 @@ public class ForgotPasswordController
 	
 	static final Logger logger =Logger.getLogger(ForgotPasswordController.class);
 	/**
-	 * 
-	 * @return
+	 * This method returns the forgot password page
+	 * @return forgot password page is returned
 	 */
 	@RequestMapping(value="/forgotpassword", method=RequestMethod.GET)
     public ModelAndView showForgotPassword()
@@ -31,10 +31,11 @@ public class ForgotPasswordController
 		logger.info("get request for forgot password served");
     	return new ModelAndView("forgotpassword");
     }
+	
 	/**
 	 * 
-	 * @param name
-	 * @return
+	 * @param name is the username of user who forgot their password
+	 * @return view with a message saying whether the username is found or not is returned
 	 */
     @RequestMapping(value="/forgotpassword", method=RequestMethod.POST)
     public ModelAndView sendMailLink(@RequestParam String name)
@@ -45,9 +46,9 @@ public class ForgotPasswordController
     }
     /**
      * 
-     * @param userService
-     * @param name
-     * @return
+     * @param userService bean is required to find out whether the user is actually present or not
+     * @param name is the username of the user
+     * @return message whether the forgot password flow is successful or user is invalid
      */
     public String getMessage(UserService userService, String name) 
 	{

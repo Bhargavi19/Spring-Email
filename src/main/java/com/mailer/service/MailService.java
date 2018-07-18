@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.mailer.model.Mail;
 /**
- * 
+ * This interface provides the abstract methods that has to be implemented by service implementation classes
  * @author vishnu
- *
+ * 
  */
 public interface MailService 
 {
