@@ -1,4 +1,4 @@
-package com.vishnu.project.testing;
+package com.mailer.testing;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.web.WebAppConfiguration;

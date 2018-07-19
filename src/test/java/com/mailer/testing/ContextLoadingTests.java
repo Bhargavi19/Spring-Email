@@ -1,4 +1,4 @@
-package com.vishnu.project.testing;
+package com.mailer.testing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

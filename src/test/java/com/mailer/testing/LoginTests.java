@@ -1,4 +1,4 @@
-package com.vishnu.project.testing;
+package com.mailer.testing;
 /**
  * @author vishnu
  */
@@ -69,8 +69,8 @@ public class LoginTests extends MailerAbstractTestClass
                 .build();
 		
 		u = new User();
-		u.setUsername("mockuser@gmail.com");
-		u.setPassword("mock123");
+		u.setUsername("testuser@gmail.com");
+		u.setPassword("testpassword");
 		userService.save(u);
 		
 	 }
@@ -148,7 +148,7 @@ public class LoginTests extends MailerAbstractTestClass
 	public void forgotPasswordTesterWithValidUserName() 
 	{
 		ForgotPasswordController helper = new ForgotPasswordController();
-		assertEquals("Password reset link has been sent",helper.getMessage(userService,"vishnu@gmail.com"));
+		assertEquals("Password reset link has been sent",helper.getMessage(userService,"testuser@gmail.com"));
 	}
 	
 	@Test
@@ -172,7 +172,7 @@ public class LoginTests extends MailerAbstractTestClass
 	public void testLoginSuccess() throws Exception 
 	{
 	   mockMvc
-	  .perform(formLogin().user(u.getUsername()).password("dummy123"))
+	  .perform(formLogin().user(u.getUsername()).password("testpassword"))
 	  .andExpect(authenticated());
 	}
 	

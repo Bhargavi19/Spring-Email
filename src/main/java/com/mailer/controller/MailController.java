@@ -2,10 +2,11 @@ package com.mailer.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class MailController
 			try
 			{
 				 mails = mailService.getAllMailsByToAndType(uname,TYPE);
+				 logger.info("inbox size::"+mails.size());
 			}
 			catch(CrudException e)
 			{
@@ -130,6 +132,7 @@ public class MailController
 			ModelAndView viewModel = new ModelAndView("viewmail");
 			try 
 			{
+				logger.info("id is::"+id);
 				mail = mailService.getById(id);
 				logger.info("mail object is "+mail);
 			}
@@ -160,6 +163,7 @@ public class MailController
 	 * @return return a view page with list of remaining mails
 	 * @exception throws UserAccessException,CrudException 
 	 */
+	
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public ModelAndView deleteMail(@RequestParam String name,@RequestParam Long id,@RequestParam String page,@RequestParam String move, Principal p)
 	{
@@ -217,12 +221,17 @@ public class MailController
 		if(p.getName().equalsIgnoreCase(name))
 		{
 			Mail mail = null;
-			try {
-			mail = mailService.getById(id);
-			mail.setType(TYPE);
-			mailService.saveMail(mail);
+			try 
+			{
+				logger.info("principal name "+p.getName()+" trash mail id"+id);
+				mail = mailService.getById(id);
+				if(mail == null) throw new EntityNotFoundException("Can't find Mail for ID " + id);
+				mail.setType(TYPE);
+				mailService.saveMail(mail);
+				logger.info("mail type after restore" + mail.getType());
 			}
-			catch(CrudException e) {
+			catch(CrudException e) 
+			{
 				throw new CrudException("Sorry "+name+"!.There is some problem restoring your mail");
 			}
 			
@@ -242,6 +251,7 @@ public class MailController
 	 * @return returns a view page with all trash mails in it
 	 * @exception throws UserAccessException, CrudException
 	 */
+	
 	@RequestMapping(value="/trash/{name}", method=RequestMethod.GET)
 	public ModelAndView showTrash(@PathVariable String name, Principal p)
 	{
@@ -290,6 +300,7 @@ public class MailController
 	 * @return returns a view page with all sent mails  in it
 	 * @exception throws UserAccessException,CrudException  
 	*/
+	
 	@RequestMapping(value="/sent/{name}", method=RequestMethod.GET)
 	public ModelAndView showSentMails(@PathVariable String name, Principal p)
 	{
