@@ -69,7 +69,7 @@ public class MailServiceImpl implements MailService
 	 * @param  mail is the mail pojo that has to be saved
 	 */
 	@Override
-	public void saveMail(Mail mail) 
+	public void save(Mail mail) 
 	{
 		mailRepository.save(mail);
 		

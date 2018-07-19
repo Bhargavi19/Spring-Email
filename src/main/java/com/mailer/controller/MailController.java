@@ -176,7 +176,7 @@ public class MailController
 				try 
 				{
 					mail.setType(DELETED);
-					mailService.saveMail(mail);
+					mailService.save(mail);
 				}
 				catch(CrudException e) 
 				{
@@ -227,7 +227,7 @@ public class MailController
 				mail = mailService.getById(id);
 				if(mail == null) throw new EntityNotFoundException("Can't find Mail for ID " + id);
 				mail.setType(TYPE);
-				mailService.saveMail(mail);
+				mailService.save(mail);
 				logger.info("mail type after restore" + mail.getType());
 			}
 			catch(CrudException e) 

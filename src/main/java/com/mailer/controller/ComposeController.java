@@ -128,7 +128,7 @@ public class ComposeController
 			m.setSubject(compose.getSubject());
 			try 
 			{
-				mailService.saveMail(m);
+				mailService.save(m);
 			}
 			catch(CrudException e) 
 			{

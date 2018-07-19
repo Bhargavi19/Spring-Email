@@ -68,6 +68,7 @@ public class LoginTests extends MailerAbstractTestClass
 					.addFilter(springSecurityFilterChain)
                 .build();
 		
+		
 		u = new User();
 		u.setUsername("testuser@gmail.com");
 		u.setPassword("testpassword");
