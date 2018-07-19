@@ -1,7 +1,14 @@
-#RELEASE NOTES<br>
+#RELEASE NOTES FOR v.2.2<br>
 bug causing registration error in v.1.2 is fixed <strong >v.2.2 is the new version</strong>
 
-
+#RELEASE NOTES FOR v.3 <br>
+The issue found in previous version is mails not persisting. Issue is fixed by removing the column mappings in Mail Model class<br>
+<strong>New in v.3</strong><br>
+1) changed package names<br>
+2) Added more test cases<br>
+3) Comments according javadoc standards are added<br>
+4) Added information in README.md about how to create user in mysql and grant privileges to specific database<br>
+5) How to make changes in application.properties is specified<br>
 # Mailer Application
 
 Overview
