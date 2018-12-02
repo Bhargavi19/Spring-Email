@@ -7,8 +7,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import com.mailer.controller.LoginController;
-import com.mailer.controller.RegistrationController;
+import com.email.controller.LoginController;
+import com.email.controller.RegistrationController;
 
 @WebAppConfiguration
 public class MailerTestClass extends MailerAbstractTestClass 

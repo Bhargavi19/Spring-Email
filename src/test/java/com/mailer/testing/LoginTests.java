@@ -28,12 +28,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.mailer.controller.ComposeController;
-import com.mailer.controller.ForgotPasswordController;
-import com.mailer.model.ComposeInfo;
-import com.mailer.model.User;
-import com.mailer.service.MailService;
-import com.mailer.service.UserService;
+import com.email.controller.ComposeController;
+import com.email.controller.ForgotPasswordController;
+import com.email.model.ComposeInfo;
+import com.email.model.User;
+import com.email.service.MailService;
+import com.email.service.UserService;
 
 //@WithMockUser
 @Transactional

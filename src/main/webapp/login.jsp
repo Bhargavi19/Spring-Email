@@ -17,7 +17,7 @@
     <title>Welcome to mailer app</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/NewFile.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -32,8 +32,8 @@
 
     <form method="POST" action="${contextPath}/login" class="form-signin">
     	
-    	<h2 class="form-heading">Welcome to Mailer</h2>
-        <h3 class="form-heading">Log into mailer</h3>
+    	<h2 class="form-heading">Welcome to your Mail</h2>
+        <h3 class="form-heading">Log in</h3>
 
         <div class="form-group ${error != null ? 'has-error' : ''}">
         

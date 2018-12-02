@@ -9,14 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.mailer.MailerApplication;
-import com.mailer.controller.ComposeController;
-import com.mailer.controller.CustomErrorController;
-import com.mailer.controller.DraftController;
-import com.mailer.controller.ForgotPasswordController;
-import com.mailer.controller.LoginController;
-import com.mailer.controller.RegistrationController;
-import com.mailer.service.UserService;
+import com.email.MailerApplication;
+import com.email.controller.ComposeController;
+import com.email.controller.CustomErrorController;
+import com.email.controller.DraftController;
+import com.email.controller.ForgotPasswordController;
+import com.email.controller.LoginController;
+import com.email.controller.RegistrationController;
+import com.email.service.UserService;
 
 
 public  class ContextLoadingTests extends MailerAbstractTestClass 

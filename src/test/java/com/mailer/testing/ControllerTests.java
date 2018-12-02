@@ -26,10 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
-import com.mailer.model.Mail;
-import com.mailer.repository.MailRepository;
-import com.mailer.service.MailService;
-import com.mailer.service.UserService;
+import com.email.model.Mail;
+import com.email.repository.MailRepository;
+import com.email.service.MailService;
+import com.email.service.UserService;
 
 @WithMockUser
 @Transactional
