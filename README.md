@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #RELEASE NOTES FOR v.2.2<br>
 bug causing registration error in v.1.2 is fixed <strong >v.2.2 is the new version</strong>
 
@@ -113,3 +114,6 @@ spring.datasource.password = {password of user} <br>
    5) If you want to deploy the war file to a tomcat container, then copy the war to webapps  	 	  folder in <h3>tomcat(/tomcat/webapps/)</h3> and start the tomcat container.   
    
    6) Start the tomcat container and hit <h4>http://localhost:8080/mailer</h4> in browser. Browser redirects you to home page of application
+=======
+# Spring-Email
+>>>>>>> fd692ee96eedb3e33bde833702cc7fef757f9b19
